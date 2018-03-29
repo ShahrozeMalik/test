@@ -1,0 +1,60 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+<section class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h1>URL Shortner</h1>
+            <div class="form-group">
+                <input type="text" class="form-control" id="longURL" placeholder="Enter original URL here"><br/>
+                <input type="text" class="form-control" id="Hash"><br/>
+                <div class="col-md-4">
+                    <a class="btn btn-info form-control" id="URL">Shorten URL</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h1>Get Original URL</h1>
+            <div class="form-group">
+                <input type="text" class="form-control" id="shortURL" placeholder="Enter short URL here"><br/>
+                <input type="text" class="form-control" id="originalURL" ><br/>
+                <div class="col-md-4">
+                    <a class="btn btn-info form-control" id="getURL">Original URL</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+ <script type="text/javascript" src="~/Scripts/jquery-3.3.1.js" ></script>
+<script type="text/javascript" src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script>
+    $("#URL").click(function () {
+        var url = $("#longURL").val();
+            $.ajax({
+                url: '/Home/GetShortURL',
+                data: { longURL: url },
+                type: 'POST',
+                success: function (data) {
+                    $("#Hash").attr('value', data);
+                },
+                error: function () {
+                    alert("Error occured");
+                }
+            });
+    });
+    $("#getURL").click(function () {
+        var url = $("#shortURL").val();
+        $.ajax({
+            url: '/Home/GetOriginalURL',
+            data: { shortURL: url },
+            type: 'POST',
+            success: function (data) {
+                $("#originalURL").attr('value', data);
+            },
+            error: function () {
+                alert("Error occured");
+            }
+        });
+    });
+</script>
+
